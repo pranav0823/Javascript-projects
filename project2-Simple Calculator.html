@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Calculator</title>
+</head>
+<body>
+    <h1>Simple Calculator</h1>
+    <input type="text" id="display" disabled>
+    <div>
+        <button onclick="appendNumber(7)">7</button>
+        <button onclick="appendNumber(8)">8</button>
+        <button onclick="appendNumber(9)">9</button>
+        <button onclick="performOperation('+')">+</button>
+    </div>
+    <div>
+        <button onclick="appendNumber(4)">4</button>
+        <button onclick="appendNumber(5)">5</button>
+        <button onclick="appendNumber(6)">6</button>
+        <button onclick="performOperation('-')">-</button>
+    </div>
+    <div>
+        <button onclick="appendNumber(1)">1</button>
+        <button onclick="appendNumber(2)">2</button>
+        <button onclick="appendNumber(3)">3</button>
+        <button onclick="performOperation('*')">*</button>
+    </div>
+    <div>
+        <button onclick="appendNumber(0)">0</button>
+        <button onclick="performOperation('/')">/</button>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="calculateResult()">=</button>
+    </div>
+
+    <script>
+        let currentInput = "";
+        let currentOperator = "";
+        let previousInput = "";
+
+        function appendNumber(number) {
+            currentInput += number;
+            updateDisplay();
+        }
+
+        function performOperation(operator) {
+            currentOperator = operator;
+            previousInput = currentInput;
+            currentInput = "";
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = "";
+            currentOperator = "";
+            previousInput = "";
+            updateDisplay();
+        }
+
+        function calculateResult() {
+            if (currentOperator === "+") {
+                currentInput = (parseFloat(previousInput) + parseFloat(currentInput)).toString();
+            } else if (currentOperator === "-") {
+                currentInput = (parseFloat(previousInput) - parseFloat(currentInput)).toString();
+            } else if (currentOperator === "*") {
+                currentInput = (parseFloat(previousInput) * parseFloat(currentInput)).toString();
+            } else if (currentOperator === "/") {
+                currentInput = (parseFloat(previousInput) / parseFloat(currentInput)).toString();
+            }
+            currentOperator = "";
+            previousInput = "";
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            document.getElementById("display").value = currentInput;
+        }
+    </script>
+</body>
+</html>
