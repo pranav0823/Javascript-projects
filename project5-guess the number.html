@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Guess the Number</title>
+</head>
+<body>
+    <h1>Guess the Number</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <form onsubmit="checkGuess(event)">
+        <input type="number" id="userGuess" required>
+        <button type="submit">Submit Guess</button>
+    </form>
+    <p id="feedback"></p>
+
+    <script>
+        const minNumber = 1;
+        const maxNumber = 100;
+        const targetNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+
+        function checkGuess(event) {
+            event.preventDefault();
+            const userGuess = parseInt(document.getElementById("userGuess").value, 10);
+
+            if (isNaN(userGuess)) {
+                document.getElementById("feedback").textContent = "Please enter a valid number.";
+            } else if (userGuess < minNumber || userGuess > maxNumber) {
+                document.getElementById("feedback").textContent = "Your guess is out of the valid range.";
+            } else if (userGuess === targetNumber) {
+                document.getElementById("feedback").textContent = "Congratulations! You guessed the correct number!";
+            } else if (userGuess < targetNumber) {
+                document.getElementById("feedback").textContent = "Try a higher number.";
+            } else {
+                document.getElementById("feedback").textContent = "Try a lower number.";
+            }
+        }
+    </script>
+</body>
+</html>
