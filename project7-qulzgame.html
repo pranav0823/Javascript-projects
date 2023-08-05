@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Game</title>
+</head>
+<body>
+    <h1>Quiz Game</h1>
+    <div id="quizContainer">
+        <div id="question"></div>
+        <div id="options"></div>
+        <button onclick="submitAnswer()">Submit Answer</button>
+    </div>
+    <div id="resultContainer"></div>
+
+    <script>
+        const quizQuestions = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Paris", "Madrid", "Rome"],
+                correctAnswer: "Paris"
+            },
+            {
+                question: "Which planet is closest to the Sun?",
+                options: ["Earth", "Mars", "Venus", "Mercury"],
+                correctAnswer: "Mercury"
+            },
+            {
+                question: "What is 2 + 2?",
+                options: ["3", "4", "5", "6"],
+                correctAnswer: "4"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function displayQuestion() {
+            const questionElement = document.getElementById("question");
+            const optionsElement = document.getElementById("options");
+            const currentQuestion = quizQuestions[currentQuestionIndex];
+
+            questionElement.textContent = currentQuestion.question;
+            optionsElement.innerHTML = "";
+
+            currentQuestion.options.forEach((option) => {
+                const radioInput = document.createElement("input");
+                radioInput.type = "radio";
+                radioInput.name = "answer";
+                radioInput.value = option;
+                optionsElement.appendChild(radioInput);
+
+                const label = document.createElement("label");
+                label.textContent = option;
+                optionsElement.appendChild(label);
+
+                optionsElement.appendChild(document.createElement("br"));
+            });
+        }
+
+        function submitAnswer() {
+            const selectedAnswer = document.querySelector("input[name='answer']:checked");
+
+            if (selectedAnswer) {
+                const userAnswer = selectedAnswer.value;
+                const currentQuestion = quizQuestions[currentQuestionIndex];
+                
+                if (userAnswer === currentQuestion.correctAnswer) {
+                    score++;
+                }
+
+                currentQuestionIndex++;
+                
+                if (currentQuestionIndex < quizQuestions.length) {
+                    displayQuestion();
+                } else {
+                    displayResult();
+                }
+            }
+        }
+
+        function displayResult() {
+            const quizContainer = document.getElementById("quizContainer");
+            const resultContainer = document.getElementById("resultContainer");
+
+            quizContainer.style.display = "none";
+            resultContainer.textContent = `Your score: ${score} out of ${quizQuestions.length}`;
+        }
+
+        displayQuestion();
+    </script>
+</body>
+</html>
